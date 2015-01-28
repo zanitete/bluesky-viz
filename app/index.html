@@ -28,15 +28,13 @@
 			a {
 				color: red;
 			}
-
-			#container {
-				background-color: red;
-			}
 		</style>
 	</head>
 
 	<body>
-		<div id="container"></div>
+		<div id="container">
+			<img id="renderedImage" src="img/image_000110.png" style="width: 100%">
+		</div>
 		<div id="info">
 			<a href="http://threejs.org" target="_blank">three.js</a> - trackball controls example</br>
 			MOVE mouse &amp; press LEFT/A: rotate, MIDDLE/S: zoom, RIGHT/D: pan
@@ -120,8 +118,8 @@
 
 				// renderer
 
-				renderer = new THREE.WebGLRenderer( { antialias: false } );
-				renderer.setClearColor( scene.fog.color );
+				renderer = new THREE.WebGLRenderer( { antialias: false, alpha: true } );
+				//renderer.setClearColor( scene.fog.color );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -164,13 +162,15 @@
 
 			}
 			var counter = 0, frames = 0;
+			var renderedImage = document.getElementById('renderedImage');
+
 			function render() {
-				if(counter++%2 === 0) {
+				if(counter++%6 === 0) {
 					console.log(frames++%255);
-					console.log((frames%100)/100, ((frames-100)%100)/100, ((frames-200)%100)/100);
-					//scene.fog.color = new THREE.Color(frames%255, (frames-100)%255, (frames-200)%255);
-					renderer.setClearColor(new THREE.Color((frames%100)/100, ((frames-100)%100)/100, ((frames-200)%100)/100));
+					console.log(frames%10);
+					//renderer.setClearColor(new THREE.Color((frames%100)/100, ((frames-100)%100)/100, ((frames-200)%100)/100));
 					renderer.render( scene, camera );
+					renderedImage.src = 'img/image_00011' + frames%10 + '.png';
 					stats.update();
 				}
 			}
